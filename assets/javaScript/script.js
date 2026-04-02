@@ -1,232 +1,236 @@
-window.addEventListener("scroll", function () {
-    let navbar = document.querySelector("nav");
-    if (window.scrollY > 50) { 
-        navbar.classList.add("nav-scrolled"); // Add class when scrolled
-    } else {
-        navbar.classList.remove("nav-scrolled"); // Remove class when at top
-    }
-});
+const PROJECT_COPY = {
+  logistics: {
+    badge: "Flagship",
+    title: "UWA Logistics Agent",
+    desc:
+      "A stateful, multi-agent AI platform for the UWA AI Club: room bookings, event management, poster generation, notifications, and interest-based recommendations. LangGraph orchestrates specialized ReAct agents with conditional routing and persistent memory. Includes a React + Vite frontend, Dockerized full-stack deployment, MariaDB, REST APIs, and Google Calendar sync for reliable, production-style workflows.",
+    tech: "Python · Django · React · Vite · LangGraph · LangChain · OpenRouter LLM · MariaDB · Docker · REST · Google Calendar API",
+  },
+  crm: {
+    badge: "Freelance",
+    title: "CRM Desktop System",
+    desc:
+      "End-to-end CRM desktop application built with Python and PySide6 for a business in Australia. Modules cover invoice generation and printing, sales recording and history, dynamic sales reports, product stock management, barcode scanning for cart operations, and reprinting past sales. Object-oriented design with MariaDB/RDBMS for data integrity and a maintainable codebase.",
+    tech: "Python · PySide6 · MariaDB · RDBMS · OOP · Barcode",
+  },
+  wallet: {
+    badge: "Academic",
+    title: "WalletWhiz",
+    desc:
+      "Full-stack personal finance web app using Flask: budgets, expense visualization, and downloadable summaries. Interactive dashboards and automated spending insights with AJAX, jQuery, and SQLAlchemy. Emphasis on reliability through unit tests and Selenium end-to-end coverage.",
+    tech: "Flask · Python · SQLAlchemy · HTML · CSS · JavaScript · jQuery · AJAX · Jinja · Unit testing · Selenium",
+  },
+  cameras: {
+    badge: "Production",
+    title: "Multi-camera tracking",
+    desc:
+      "Contributed to a production-grade system that tracks people and vehicles across multiple camera feeds. Work included improving legacy C++ and Python modules, optimizing compute and reducing latency, SQL-based data handling, and modularizing/containerizing components with Docker for more dependable deployments.",
+    tech: "Python · C++ · SQL · OOP · Docker",
+  },
+};
 
 document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger_menu");
-  const nav = document.querySelector("nav");
-  const navLinks = document.querySelectorAll("nav a");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".main-nav");
+  const navLinks = document.querySelectorAll(".main-nav a");
+  const sections = document.querySelectorAll("main section[id], footer[id]");
+  const revealItems = document.querySelectorAll(".reveal");
+  const progressBar = document.querySelector(".scroll-progress");
+  const parallaxImage = document.querySelector(".parallax-image");
+  const heroVisual = document.querySelector(".hero-visual");
+  const statsBar = document.querySelector(".stats-bar");
 
-  // Toggle menu when hamburger is clicked
-  hamburger.addEventListener("click", () => {
-      nav.classList.toggle("active");
-  });
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
 
-  // Close menu when a nav link is clicked (for better UX)
-  navLinks.forEach(link => {
+    navLinks.forEach((link) => {
       link.addEventListener("click", () => {
-          if (window.innerWidth <= 1180) {
-              nav.classList.remove("active");
-          }
+        nav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
       });
-  });
+    });
+  }
 
-  // Function to close the menu if screen size increases
-  function handleResize() {
-      if (window.innerWidth > 1180) {
-          nav.classList.remove("active");
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.16 }
+  );
+  revealItems.forEach((item) => revealObserver.observe(item));
+
+  const setActiveNavLink = () => {
+    const marker = window.scrollY + 140;
+    const aboutTop = document.querySelector("#about")?.offsetTop ?? 600;
+
+    if (window.scrollY < aboutTop - 120) {
+      navLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        link.classList.toggle("active", href === "#top");
+      });
+      return;
+    }
+
+    let currentId = "";
+    sections.forEach((section) => {
+      if (marker >= section.offsetTop && marker < section.offsetTop + section.offsetHeight) {
+        currentId = section.id;
       }
-  }
+    });
 
-  window.addEventListener("resize", handleResize);
-});
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href");
+      link.classList.toggle("active", href === `#${currentId}`);
+    });
+  };
 
+  const setScrollProgress = () => {
+    if (!progressBar) {
+      return;
+    }
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = `${progress}%`;
+  };
 
-document.addEventListener("DOMContentLoaded", () => {
-  const header = document.querySelector("header");
-  const navLinks = document.querySelectorAll("nav a");
+  const setHeroParallax = () => {
+    if (!parallaxImage || !heroVisual) {
+      return;
+    }
+    const y = Math.min(window.scrollY, 400);
+    const imageOffset = y * -0.06;
+    const scale = 1 + y * 0.0002;
+    parallaxImage.style.transform = `translateY(${imageOffset}px) scale(${scale})`;
+    heroVisual.style.transform = `translateY(${y * -0.025}px)`;
+  };
 
-  // Show the header on page load
-  header.style.opacity = "1";
-  header.style.transform = "translateY(0)";
-  header.style.transition = "opacity 0.6s ease-in-out, transform 0.6s ease-in-out";
+  let statsAnimated = false;
+  const animateStats = () => {
+    if (statsAnimated || !statsBar) {
+      return;
+    }
+    const nums = statsBar.querySelectorAll(".stat-num[data-target]");
+    nums.forEach((el) => {
+      const target = parseInt(el.getAttribute("data-target"), 10);
+      const duration = 900;
+      const start = performance.now();
 
-  // Function to highlight nav item based on scroll position
-  function highlightNavItem() {
-      let scrollPosition = window.scrollY;
-      
-      navLinks.forEach(link => {
-          let section = document.querySelector(link.getAttribute("href"));
-          if (section) {
-              let sectionTop = section.offsetTop - 80; // Offset for fixed navbar
-              let sectionHeight = section.offsetHeight;
+      const tick = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - (1 - t) * (1 - t);
+        el.textContent = String(Math.round(eased * target));
+        if (t < 1) {
+          requestAnimationFrame(tick);
+        }
+      };
+      requestAnimationFrame(tick);
+    });
+    statsAnimated = true;
+  };
 
-              if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                  navLinks.forEach(nav => nav.classList.remove("selected"));
-                  link.classList.add("selected");
-              }
+  if (statsBar) {
+    const statObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateStats();
+            statObserver.unobserve(entry.target);
           }
-      });
+        });
+      },
+      { threshold: 0.35 }
+    );
+    statObserver.observe(statsBar);
   }
 
-  // Run function on scroll
-  window.addEventListener("scroll", highlightNavItem);
-  
-  // Initially highlight the correct nav item on load
-  highlightNavItem();
+  const projectDetail = document.getElementById("project-detail");
+  const projectDetailInner = document.getElementById("project-detail-inner");
+  const projectBadge = document.getElementById("project-badge");
+  const projectTitle = document.getElementById("project-title");
+  const projectDesc = document.getElementById("project-desc");
+  const projectTech = document.getElementById("project-tech");
+  const projectPickers = document.querySelectorAll(".project-picker");
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const applyProject = (key) => {
+    const data = PROJECT_COPY[key];
+    if (!data || !projectBadge || !projectTitle || !projectDesc || !projectTech) {
+      return;
+    }
+    projectBadge.textContent = data.badge;
+    projectTitle.textContent = data.title;
+    projectDesc.textContent = data.desc;
+    projectTech.textContent = data.tech;
+  };
+
+  const switchProject = (key, button) => {
+    const data = PROJECT_COPY[key];
+    if (!data || !projectDetailInner) {
+      return;
+    }
+
+    projectPickers.forEach((btn) => {
+      const active = btn === button;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-pressed", String(active));
+    });
+
+    const runUpdate = () => {
+      applyProject(key);
+      if (prefersReducedMotion) {
+        return;
+      }
+      projectDetailInner.classList.remove("is-switching-out");
+      requestAnimationFrame(() => {
+        projectDetailInner.classList.add("is-switching-in");
+        const onAnimEnd = () => {
+          projectDetailInner.classList.remove("is-switching-in");
+          projectDetailInner.removeEventListener("animationend", onAnimEnd);
+        };
+        projectDetailInner.addEventListener("animationend", onAnimEnd);
+      });
+    };
+
+    if (prefersReducedMotion) {
+      applyProject(key);
+    } else {
+      projectDetailInner.classList.add("is-switching-out");
+      window.setTimeout(runUpdate, 300);
+    }
+
+    if (projectDetail && window.matchMedia("(max-width: 960px)").matches) {
+      window.setTimeout(() => {
+        projectDetail.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
+      }, prefersReducedMotion ? 0 : 120);
+    }
+  };
+
+  projectPickers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.getAttribute("data-project");
+      if (!key || btn.classList.contains("is-active")) {
+        return;
+      }
+      switchProject(key, btn);
+    });
+  });
+
+  const onScroll = () => {
+    setActiveNavLink();
+    setScrollProgress();
+    setHeroParallax();
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 });
-
-
-  
-  document.addEventListener("DOMContentLoaded", function () {
-    const skillItems = document.querySelectorAll(".skillItem");
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("fadeIn");
-          observer.unobserve(entry.target); // Stop observing once it's visible
-        }
-      });
-    }, { threshold: 0.2 });
-
-    skillItems.forEach((item) => {
-      observer.observe(item);
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const skillItems = document.querySelectorAll(".navButton");
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("slideLeftToRight");
-          observer.unobserve(entry.target); // Stop observing once it's visible
-        }
-      });
-    }, { threshold: 0.2 });
-
-    skillItems.forEach((item) => {
-      observer.observe(item);
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const skillItems = document.querySelectorAll(".projects");
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("fadeIn");
-          observer.unobserve(entry.target); // Stop observing once it's visible
-        }
-      });
-    }, { threshold: 0.2 });
-
-    skillItems.forEach((item) => {
-      observer.observe(item);
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const skillItems = document.querySelectorAll(".experience");
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("slideLeftToRight");
-          observer.unobserve(entry.target); // Stop observing once it's visible
-        }
-      });
-    }, { threshold: 0.2 });
-
-    skillItems.forEach((item) => {
-      observer.observe(item);
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const skillItems = document.querySelectorAll(".certificateItem");
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("slideLeftToRight");
-          observer.unobserve(entry.target); // Stop observing once it's visible
-        }
-      });
-    }, { threshold: 0.2 });
-
-    skillItems.forEach((item) => {
-      observer.observe(item);
-    });
-  });
-
-
-
-document.getElementById("nextButton").addEventListener("click", function() {
-  // Start the sliding animation (move to the left)
-  document.getElementById("projectWrapper").style.transform = "translateX(-100%)";
-
-  setTimeout(function() {
-    // Hide the first set of projects and show the second set after the transition
-    document.getElementById("projectSet1").style.display = "none";
-    document.getElementById("projectSet2").style.display = "block";
-
-    // Reset position to the start after the sliding animation
-    document.getElementById("projectWrapper").style.transition = "none"; // Disable transition for reset
-    document.getElementById("projectWrapper").style.transform = "translateX(0)"; // Reset position
-
-    setTimeout(function() {
-      // Re-enable transition after resetting position
-      document.getElementById("projectWrapper").style.transition = "transform 0.9s ease"; // Re-enable transition
-    }, 50); // Small delay to allow the reset to take effect
-
-    // Hide the nextButton and show the prevButton
-    document.getElementById("nextButton").style.display = "none";
-    document.getElementById("prevButton").style.display = "inline-block";
-  }, 500); // The timeout duration matches the transition time
-});
-
-document.getElementById("prevButton").addEventListener("click", function() {
-  // Start the sliding animation (move to the right)
-  document.getElementById("projectWrapper").style.transform = "translateX(100%)";
-
-  setTimeout(function() {
-    // Hide the second set of projects and show the first set after the transition
-    document.getElementById("projectSet2").style.display = "none";
-    document.getElementById("projectSet1").style.display = "block";
-
-    // Reset position to the start after the sliding animation
-    document.getElementById("projectWrapper").style.transition = "none"; // Disable transition for reset
-    document.getElementById("projectWrapper").style.transform = "translateX(0)"; // Reset position
-
-    setTimeout(function() {
-      // Re-enable transition after resetting position
-      document.getElementById("projectWrapper").style.transition = "transform 0.9s ease"; // Re-enable transition
-    }, 50); // Small delay to allow the reset to take effect
-
-    // Hide the prevButton and show the nextButton
-    document.getElementById("prevButton").style.display = "none";
-    document.getElementById("nextButton").style.display = "inline-block";
-  }, 500); // The timeout duration matches the transition time
-});
-
-$(document).ready(function () {
-  let count = 0;
-  let target = 9.02; // Change this to your desired final value
-  let speed = 25; // Lower is faster
-
-  function updateCounter() {
-      let interval = setInterval(function () {
-          if (count < target) {
-              count++;
-              $("#counter").text(count);
-          } else {
-              clearInterval(interval);
-          }
-      }, speed);
-  }
-
-  updateCounter();
-});
-
-
-  
-  
