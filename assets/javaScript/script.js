@@ -233,4 +233,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  /* Visitor badge — works on static GitHub Pages (third-party stores count; not in this repo) */
+  const visitCounter = document.getElementById("visit-counter");
+  if (visitCounter) {
+    const badge = document.createElement("img");
+    badge.alt = "Visitor count";
+    badge.className = "visit-counter-badge";
+    badge.decoding = "async";
+    badge.referrerPolicy = "no-referrer-when-downgrade";
+    badge.loading = "eager";
+
+    const fixedId = document.body?.dataset?.visitCounterId?.trim();
+    const pageId =
+      fixedId ||
+      `${window.location.hostname}${window.location.pathname.replace(/\/$/, "") || "/"}`;
+
+    if (window.location.protocol === "file:") {
+      const note = document.createElement("span");
+      note.className = "visit-counter-fallback";
+      note.textContent = "Deploy to GitHub Pages to show count";
+      visitCounter.appendChild(note);
+    } else {
+      badge.src = `https://visitor-badge.laobi.icu/badge?page_id=${encodeURIComponent(pageId)}`;
+      badge.addEventListener("error", () => {
+        badge.remove();
+        const note = document.createElement("span");
+        note.className = "visit-counter-fallback";
+        note.textContent = "Count blocked or offline (try disabling ad blocker)";
+        visitCounter.appendChild(note);
+      });
+      visitCounter.appendChild(badge);
+    }
+  }
 });

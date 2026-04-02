@@ -1128,6 +1128,40 @@ body {
   text-decoration: underline;
 }
 
+.footer-links-end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.visit-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.visit-counter-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.visit-counter-badge {
+  display: block;
+  height: auto;
+  max-height: 28px;
+  width: auto;
+  min-width: 88px;
+}
+
+.visit-counter-fallback {
+  font-size: 0.78rem;
+  color: var(--muted);
+  max-width: 14rem;
+  line-height: 1.35;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
   .menu-toggle {
