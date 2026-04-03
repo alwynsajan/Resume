@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.scrollY < aboutTop - 120) {
       navLinks.forEach((link) => {
         const href = link.getAttribute("href");
-        link.classList.toggle("active", href === "#top");
+        link.classList.toggle("active", href === "#profile");
       });
       return;
     }
@@ -233,6 +233,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  };
+
+  document.querySelectorAll('a[href="#top"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollToTop();
+      if (history.replaceState) {
+        history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+      }
+    });
+  });
 
   /* Visitor badge — works on static GitHub Pages (third-party stores count; not in this repo) */
   const visitCounter = document.getElementById("visit-counter");

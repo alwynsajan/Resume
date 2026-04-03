@@ -16,18 +16,18 @@
 </head>
 <body data-visit-counter-id="alwynsajan.github.io-resume">
   <!-- One stable data-visit-counter-id = one global counter (edit to your own unique string) -->
+  <div id="top" class="page-top-anchor" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"></div>
   <div class="page-bg" aria-hidden="true"></div>
 
-  <header class="site-header" id="top">
+  <header class="site-header">
     <div class="container nav-wrap">
-      <a href="#top" class="logo"><span class="logo-accent">A</span>lwyn</a>
+      <a href="#profile" class="logo"><span class="logo-accent">A</span>lwyn</a>
       <nav class="main-nav" aria-label="Primary">
-        <a href="#top">Home</a>
+        <a href="#profile">Profile</a>
         <a href="#skills">Skills</a>
-        <a href="#about">About</a>
         <a href="#experience">Experience</a>
-        <a href="#projects">Portfolio</a>
+        <a href="#projects">Work</a>
         <a href="#education">Education</a>
         <a href="#certifications">Certs</a>
       </nav>
@@ -38,7 +38,7 @@
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="profile">
       <p class="hero-watermark" aria-hidden="true">SAJAN</p>
       <div class="hero-bg-orb orb-a"></div>
       <div class="hero-bg-orb orb-b"></div>
@@ -263,7 +263,7 @@
                 <span class="edu-year-pill"><i class="fa-regular fa-calendar"></i> 2024 — 2026</span>
               </div>
               <div class="edu-panel-icon" aria-hidden="true"><i class="fa-solid fa-graduation-cap"></i></div>
-              <h3 class="edu-degree">Master of Information Technology</h3>
+              <h3 class="edu-degree">Master of Information Technology - <span class="edu-specialization">Applied Computing</span></h3>
               <p class="edu-inst">University of Western Australia</p>
               <p class="edu-location"><i class="fa-solid fa-location-dot"></i> Perth, Australia</p>
               <div class="edu-metrics">
@@ -289,7 +289,7 @@
               <div class="edu-panel-icon" aria-hidden="true"><i class="fa-solid fa-microchip"></i></div>
               <h3 class="edu-degree">B.Tech Electronics &amp; Communication</h3>
               <p class="edu-inst">Thangal Kunju Musaliar College of Engineering</p>
-              <p class="edu-location"><i class="fa-solid fa-location-dot"></i> India</p>
+              <p class="edu-location"><i class="fa-solid fa-location-dot"></i> Kerala, India</p>
               <div class="edu-metrics">
                 <div class="edu-metric">
                   <span class="edu-metric-num">9.02</span>
@@ -303,44 +303,52 @@
       </div>
     </section>
 
-    <!-- Certifications -->
+    <!-- Certifications — 2×2 grid -->
     <section id="certifications" class="section section-certs">
       <div class="container">
         <header class="certs-header reveal">
           <h2>Certifications</h2>
+          <p class="cert-lead">Formal courses and platform credentials that complement hands-on work.</p>
         </header>
-        <div class="cert-grid reveal">
-          <article class="cert-card">
-            <div class="cert-card-glow" aria-hidden="true"></div>
-            <div class="cert-card-icon" aria-hidden="true"><i class="fa-solid fa-brain"></i></div>
-            <div class="cert-card-body">
-              <h3 class="cert-card-title">Machine Learning Specialization</h3>
-              <p class="cert-card-issuer">Coursera</p>
+        <div class="cert-grid reveal" aria-label="Certification list">
+          <article class="cert-tile cert-tile--ml">
+            <div class="cert-tile-top">
+              <span class="cert-tile-icon" aria-hidden="true"><i class="fa-solid fa-brain"></i></span>
+              <span class="cert-tile-chip">ML &amp; AI</span>
             </div>
+            <h3 class="cert-tile-title">Machine Learning Specialization</h3>
+            <p class="cert-tile-issuer">Coursera</p>
+            <p class="cert-tile-desc">Supervised learning, neural networks, and deep learning—aligned with practical ML work.</p>
           </article>
-          <article class="cert-card">
-            <div class="cert-card-glow" aria-hidden="true"></div>
-            <div class="cert-card-icon" aria-hidden="true"><i class="fa-brands fa-python"></i></div>
-            <div class="cert-card-body">
-              <h3 class="cert-card-title">Joy of Computing Using Python</h3>
-              <p class="cert-card-issuer">NPTEL · 90%</p>
+
+          <article class="cert-tile cert-tile--py">
+            <div class="cert-tile-top">
+              <span class="cert-tile-icon" aria-hidden="true"><i class="fa-brands fa-python"></i></span>
+              <span class="cert-tile-chip">Python</span>
             </div>
+            <h3 class="cert-tile-title">Joy of Computing Using Python</h3>
+            <p class="cert-tile-issuer">NPTEL · 90%</p>
+            <p class="cert-tile-desc">Programming and computing with Python, including proctored assessment.</p>
           </article>
-          <article class="cert-card">
-            <div class="cert-card-glow" aria-hidden="true"></div>
-            <div class="cert-card-icon" aria-hidden="true"><i class="fa-solid fa-code"></i></div>
-            <div class="cert-card-body">
-              <h3 class="cert-card-title">Python Basics</h3>
-              <p class="cert-card-issuer">HackerRank</p>
+
+          <article class="cert-tile cert-tile--hr">
+            <div class="cert-tile-top">
+              <span class="cert-tile-icon" aria-hidden="true"><i class="fa-solid fa-code"></i></span>
+              <span class="cert-tile-chip">Foundations</span>
             </div>
+            <h3 class="cert-tile-title">Python Basics</h3>
+            <p class="cert-tile-issuer">HackerRank</p>
+            <p class="cert-tile-desc">Core syntax, data types, and problem-solving on HackerRank’s certification path.</p>
           </article>
-          <article class="cert-card">
-            <div class="cert-card-glow" aria-hidden="true"></div>
-            <div class="cert-card-icon" aria-hidden="true"><i class="fa-solid fa-mobile-screen"></i></div>
-            <div class="cert-card-body">
-              <h3 class="cert-card-title">Responsive Web Basics</h3>
-              <p class="cert-card-issuer">Coursera</p>
+
+          <article class="cert-tile cert-tile--web">
+            <div class="cert-tile-top">
+              <span class="cert-tile-icon" aria-hidden="true"><i class="fa-solid fa-mobile-screen"></i></span>
+              <span class="cert-tile-chip">Web</span>
             </div>
+            <h3 class="cert-tile-title">Responsive Web Basics</h3>
+            <p class="cert-tile-issuer">Coursera</p>
+            <p class="cert-tile-desc">Fluid grids, breakpoints, and mobile-friendly interfaces for the modern web.</p>
           </article>
         </div>
       </div>
