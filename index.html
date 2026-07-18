@@ -78,7 +78,7 @@
                 <i class="fa-solid fa-code-branch"></i>
                 <div>
                   <strong>AI Full-stack</strong>
-                  <span>AI · Python · React · Cloud</span>
+                  <span>AI · Python · RAG · React · Cloud</span>
                 </div>
               </div>
             </div>
@@ -90,7 +90,7 @@
         <div class="stats-bar reveal">
           <div class="stat"><span class="stat-num" data-target="2">0</span><span class="stat-suffix">+</span><span class="stat-label">Years experience</span></div>
           <div class="stat-divider"></div>
-          <div class="stat"><span class="stat-num" data-target="7">0</span><span class="stat-suffix">+</span><span class="stat-label">Featured projects</span></div>
+          <div class="stat"><span class="stat-num" data-target="8">0</span><span class="stat-suffix">+</span><span class="stat-label">Featured projects</span></div>
           <div class="stat-divider"></div>
           <div class="stat"><span class="stat-num" data-target="2">0</span><span class="stat-label">Degrees</span></div>
         </div>
@@ -111,6 +111,7 @@
           <ul class="about-pillars">
             <li><span class="pillar-dot"></span> Backend &amp; APIs</li>
             <li><span class="pillar-dot"></span> AI / ML integration</li>
+            <li><span class="pillar-dot"></span> RAG &amp; agentic systems</li>
             <li><span class="pillar-dot"></span> Reliability &amp; maintainability</li>
           </ul>
         </div>
@@ -204,15 +205,21 @@
         <div class="projects-layout reveal">
           <article class="project-feature" id="project-detail" aria-live="polite" aria-atomic="true">
             <div class="project-detail-inner" id="project-detail-inner">
-              <span class="project-badge" id="project-badge">Flagship</span>
-              <h3 id="project-title">UWA Logistics Agent</h3>
-              <p id="project-desc">Multi-agent platform for room bookings, events, poster generation, notifications, and interest-based recommendations. Built with LangGraph for conditional routing and persistent memory, a React/Vite frontend, Dockerized deployment, MariaDB, and Google Calendar sync for production-ready workflows.</p>
-              <p class="project-tech" id="project-tech">Python · Django · React · Vite · LangGraph · LangChain · MariaDB · Docker · REST · Google Calendar API</p>
+              <span class="project-badge" id="project-badge">AI Systems</span>
+              <h3 id="project-title">Ada - AI News Discord Bot</h3>
+              <p id="project-desc">An intelligent Discord bot that automatically fetches, filters, summarizes, and answers questions about the latest AI news using Retrieval-Augmented Generation (RAG) and LangGraph-driven agentic workflows. It integrates RSS feeds, Hacker News, and Reddit, uses semantic embeddings with cosine similarity search, and supports scheduled and on-demand fetching through Discord commands.</p>
+              <p class="project-tech" id="project-tech">Python · Discord.py · LangGraph · LangChain · Sentence Transformers · Groq API · Scikit-learn · SQLite · BeautifulSoup4 · APScheduler </p>
             </div>
           </article>
           <div class="project-bubbles" role="list">
             <div class="project-bubble-wrap" role="listitem">
-              <button type="button" class="project-picker is-active" data-project="logistics" aria-pressed="true">
+              <button type="button" class="project-picker is-active" data-project="ada" aria-pressed="true">
+                <span class="picker-title">Ada - AI News Discord Bot</span>
+                <span class="picker-preview">Discord.py · RAG · LangGraph · agentic workflows</span>
+              </button>
+            </div>
+            <div class="project-bubble-wrap" role="listitem">
+              <button type="button" class="project-picker" data-project="logistics" aria-pressed="false">
                 <span class="picker-title">UWA Logistics Agent</span>
                 <span class="picker-preview">UWA AI Club · multi-agent · LangGraph</span>
               </button>

@@ -6,6 +6,13 @@ const PROJECT_COPY = {
       "A stateful, multi-agent AI platform for the UWA AI Club: room bookings, event management, poster generation, notifications, and interest-based recommendations. LangGraph orchestrates specialized ReAct agents with conditional routing and persistent memory. Includes a React + Vite frontend, Dockerized full-stack deployment, MariaDB, REST APIs, and Google Calendar sync for reliable, production-style workflows.",
     tech: "Python · Django · React · Vite · LangGraph · LangChain · OpenRouter LLM · MariaDB · Docker · REST · Google Calendar API",
   },
+  ada: {
+    badge: "AI Systems",
+    title: "Ada - AI News Discord Bot",
+    desc:
+      "An intelligent Discord bot that automatically fetches, filters, summarizes, and answers questions about the latest AI news using Retrieval-Augmented Generation (RAG) and LangGraph-driven agentic workflows. It integrates RSS feeds, Hacker News, and Reddit, uses semantic embeddings with cosine similarity search, and supports scheduled and on-demand fetching through Discord commands.",
+    tech: "Python · Discord.py · LangGraph · LangChain · Sentence Transformers · Groq API · Scikit-learn · SQLite · BeautifulSoup4 · APScheduler · VADER",
+  },
   crm: {
     badge: "Freelance",
     title: "CRM Desktop System",
